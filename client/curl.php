@@ -22,20 +22,13 @@ try {
 
     $gzippedData = gzcompress(serialize($structure));
 
-    echo '<h1>Gzipped data</h1>';
-    echo '<pre>';
-    echo $gzippedData;
-    echo '</pre>';
-
-    //echo $gzippedData;
-
     $content = http_build_query(array('data' => $gzippedData));
 
     //open connection
     $ch = curl_init();
 
     //set the url, number of POST vars, POST data
-    curl_setopt($ch, CURLOPT_URL, 'http://exceptor/app_dev.php/input/key');
+    curl_setopt($ch, CURLOPT_URL, 'http://exceptor-server/input/key');
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $content);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
