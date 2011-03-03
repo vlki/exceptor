@@ -1,0 +1,3 @@
+input:
+    pattern:  /input/{key}
+    defaults: { _controller: ExceptorBundle:Input:index }
