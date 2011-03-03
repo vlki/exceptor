@@ -1,11 +1,13 @@
 Vlki\ExceptorBundle\Entity\Exception:
-    type: entity
-    table: exception
+  type: entity
+  table: exception
+  id:
     id:
-        id:
-            type: integer
-            generator:
-                strategy: IDENTITY
-    fields:
-        data:
-            type: text
+      type: integer
+      generator:
+        strategy: IDENTITY
+  fields:
+    received_at:
+      type: datetime
+    data:
+      type: text

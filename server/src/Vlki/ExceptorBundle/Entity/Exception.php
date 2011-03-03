@@ -13,7 +13,12 @@ class Exception
     private $id;
 
     /**
-     * @var text $data
+     * @var \DateTime $received_at
+     */
+    private $received_at;
+
+    /**
+     * @var string $data
      */
     private $data;
 
@@ -29,9 +34,29 @@ class Exception
     }
 
     /**
+     * Set received_at
+     *
+     * @param \DateTime $receivedAt
+     */
+    public function setReceivedAt($receivedAt)
+    {
+        $this->received_at = $receivedAt;
+    }
+
+    /**
+     * Get received_at
+     *
+     * @return \DateTime $receivedAt
+     */
+    public function getReceivedAt()
+    {
+        return $this->received_at;
+    }
+
+    /**
      * Set data
      *
-     * @param text $data
+     * @param string $data
      */
     public function setData($data)
     {
@@ -41,7 +66,7 @@ class Exception
     /**
      * Get data
      *
-     * @return text $data
+     * @return string $data
      */
     public function getData()
     {

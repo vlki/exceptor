@@ -3,8 +3,9 @@
 namespace Vlki\ExceptorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller,
-        Symfony\Component\HttpFoundation\Response,
-        Vlki\ExceptorBundle\Entity\Exception;
+    Symfony\Component\HttpFoundation\Response,
+    Vlki\ExceptorBundle\Entity\Exception,
+    DateTime;
 
 class InputController extends Controller
 {
@@ -47,6 +48,7 @@ class InputController extends Controller
 
         $exception = new Exception();
         $exception->setData($data);
+        $exception->setReceivedAt(new DateTime());
 
         /** @var $em \Doctrine\ORM\EntityManager */
         $em = $this->get('doctrine.orm.entity_manager');
