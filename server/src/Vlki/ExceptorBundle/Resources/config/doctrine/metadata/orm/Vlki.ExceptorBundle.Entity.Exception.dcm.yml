@@ -1,6 +1,6 @@
-Vlki\ExceptorBundle\Entity\UnprocessedException:
+Vlki\ExceptorBundle\Entity\Exception:
     type: entity
-    table: unprocessed_exception
+    table: exception
     id:
         id:
             type: integer

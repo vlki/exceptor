@@ -4,7 +4,7 @@ namespace Vlki\ExceptorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller,
         Symfony\Component\HttpFoundation\Response,
-        Vlki\ExceptorBundle\Entity\UnprocessedException;
+        Vlki\ExceptorBundle\Entity\Exception;
 
 class InputController extends Controller
 {
@@ -35,9 +35,17 @@ class InputController extends Controller
             }
         }
 
-        var_dump($structure);
+        if (!is_array($structure['exception'])) {
+            return new Response('Bad Request; Structure value with key exception must be array', 400);
+        }
 
-        $exception = new UnprocessedException();
+        foreach (array('class', 'message', 'code', 'trace', 'file', 'line') as $neededExceptionKey) {
+            if (!isset($structure['exception'][$neededExceptionKey])) {
+                return new Response("Bad Request; Structure key 'exception.{$neededKey}' needed", 400);
+            }
+        }
+
+        $exception = new Exception();
         $exception->setData($data);
 
         /** @var $em \Doctrine\ORM\EntityManager */

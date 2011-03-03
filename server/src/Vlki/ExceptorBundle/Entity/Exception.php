@@ -3,9 +3,9 @@
 namespace Vlki\ExceptorBundle\Entity;
 
 /**
- * Vlki\ExceptorBundle\Entity\UnprocessedException
+ * Vlki\ExceptorBundle\Entity\Exception
  */
-class UnprocessedException
+class Exception
 {
     /**
      * @var integer $id
