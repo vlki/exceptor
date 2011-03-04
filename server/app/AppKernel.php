@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             //new Symfony\Bundle\DoctrineMongoDBBundle\DoctrineMongoDBBundle(),
 
             // register your bundles
-            new Sensio\HelloBundle\HelloBundle(),
             new Vlki\ExceptorBundle\ExceptorBundle(),
         );
 
