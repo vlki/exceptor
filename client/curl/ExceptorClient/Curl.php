@@ -1,11 +1,13 @@
 <?php
 
+require_once dirname(__FILE__) . '/Curl/Exception.php';
+
 /**
  * Exceptor client built upon cURL.
  *
  * @author Jan Vlcek <vlki@vlki.cz>
  */
-class ExceptorClientCurl
+class ExceptorClient_Curl
 {
 
     /**
@@ -82,13 +84,13 @@ class ExceptorClientCurl
         if (false === $result) {
             $curlError = curl_error($ch);
             curl_close($ch);
-            throw new Exception('Logging of exception failed. Curl error: ' . $curlError);
+            throw new ExceptorClient_Curl_Exception('Logging of exception failed. Curl error: ' . $curlError);
         }
 
         curl_close($ch);
 
         if ('Ok' !== $result) {
-            throw new Exception("Expected server response should be 'Ok'. Different was returned.");
+            throw new ExceptorClient_Curl_Exception("Expected server response should be 'Ok'. Different was returned.");
         }
     }
 
