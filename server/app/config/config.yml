@@ -27,6 +27,8 @@ doctrine.orm:
     auto_generate_proxy_classes: %kernel.debug%
     mappings:
         ExceptorBundle: ~
+        
+frontend.twig: ~
 
 ## Swiftmailer Configuration
 #swiftmailer.config:
