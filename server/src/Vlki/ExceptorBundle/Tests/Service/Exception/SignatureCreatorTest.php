@@ -108,6 +108,45 @@ class SignatureCreatorTest extends Test
         $this->assertNotEquals($signature1, $signature2);
     }
 
+    public function testCreateSignature_differentNumberOfTraces_differentSignature()
+    {
+        $e1 = $this->createNoTraceExceptionEntity();
+        $e2 = $this->createNoTraceExceptionEntity();
+        $uut = $this->createUut();
+
+        $data = $e2->getExceptionData();
+        $data['trace'] = array(
+            0 => array(
+                'file' => '/home/vlki/projects/exceptor/client/curl/example.php',
+                'line' => 10,
+                'functions' => 'asdasd',
+                'args' => array(),
+            )
+        );
+        $e2->setExceptionData($data);
+
+        $signature1 = $uut->createSignature($e1);
+        $signature2 = $uut->createSignature($e2);
+
+        $this->assertNotEquals($signature1, $signature2);
+    }
+
+    public function testCreateSignature_oneTraceRecordWithDifferentLine_differentSignature()
+    {
+        $e1 = $this->createSingleTraceExceptionEntity();
+        $e2 = $this->createSingleTraceExceptionEntity();
+        $uut = $this->createUut();
+
+        $data = $e2->getExceptionData();
+        $data['trace'][0]['line'] = 11;
+        $e2->setExceptionData($data);
+
+        $signature1 = $uut->createSignature($e1);
+        $signature2 = $uut->createSignature($e2);
+
+        $this->assertNotEquals($signature1, $signature2);        
+    }
+
     protected function createUut()
     {
         return new Uut();
@@ -121,6 +160,28 @@ class SignatureCreatorTest extends Test
             'message' => 'testing exception',
             'code' => 546,
             'trace' => array(),
+            'file' => '/home/vlki/projects/exceptor/client/curl/example.php',
+            'line' => 6
+        ));
+
+        return $e;
+    }
+
+    protected function createSingleTraceExceptionEntity()
+    {
+        $e = new ExceptionEntity();
+        $e->setExceptionData(array(
+            'class' => 'Exception',
+            'message' => 'testing exception',
+            'code' => 546,
+            'trace' => array(
+                0 => array(
+                    'file' => '/home/vlki/projects/exceptor/client/curl/example.php',
+                    'line' => 10,
+                    'functions' => 'asdasd',
+                    'args' => array(),
+                )
+            ),
             'file' => '/home/vlki/projects/exceptor/client/curl/example.php',
             'line' => 6
         ));

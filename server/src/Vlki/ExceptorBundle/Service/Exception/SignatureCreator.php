@@ -16,7 +16,18 @@ class SignatureCreator
             throw new ServiceException('No exception data to make signature from');
         }
 
-        return md5($data['class'] . ':' . $data['code'] . ':' . $data['file'] . ':' . $data['line']);
+        return md5($data['class'] . ':' . $data['code'] . ':' . $data['file'] . ':' . $data['line'] . ':' . $this->createTraceString($data['trace']));
+    }
+
+    protected function createTraceString($trace)
+    {
+        $traceRecords = array();
+        
+        foreach ($trace as $traceRecord) {
+            $traceRecords[] = $traceRecord['file'] . ':' . $traceRecord['line'];
+        }
+
+        return implode(':', $traceRecords);
     }
 
 }
