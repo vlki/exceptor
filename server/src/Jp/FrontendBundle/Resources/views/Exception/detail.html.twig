@@ -1,0 +1,31 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% set data = exception.exceptionData %}
+
+{% block title %}Výjímka {{ data['class'] }}{% endblock %}
+
+{% block parent_content %}
+<h2>Projekt XY</h2>
+
+<p>Detaily projektu</p>
+{% endblock %}
+
+{% block body %}
+
+<h1>{{ data['class'] }} ({{ data['code'] }})</h1>
+<h2>Naposledy zalogována {{ exception.receivedAt|date("j. n. Y, H:i:s") }}</h2>
+<table id="excDetails">
+    <tr>
+        <th>Message</th>
+        <td>{{ data['message'] }}</td>
+    </tr>
+    <tr>
+        <th>Location</th>
+        <td>{{ data['file'] }} at line {{ data['line'] }}</td>
+    </tr>
+    <tr>
+        <th>Trace</th>
+        <td>{{ data['trace'] }}</td>
+    </tr>
+</table>
+{% endblock %}

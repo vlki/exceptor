@@ -1,3 +1,7 @@
 list_exceptions:
     pattern:  /exception
     defaults: { _controller: FrontendBundle:Exception:index }
+    
+exception:
+    pattern: /exception/{id}
+    defaults: { _controller: FrontendBundle:Exception:detail }

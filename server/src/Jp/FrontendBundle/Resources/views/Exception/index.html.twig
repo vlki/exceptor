@@ -2,6 +2,13 @@
 
 {% block title %} Výjimky {% endblock %}
 
+{% block parent_content %}
+<h2>Projekty</h2>
+<ul id="projMenu">
+    <li><a href="#">FastGSM</a></li>
+</ul>
+{% endblock %}  
+
 {% block body %}
 <h1>Seznam všech výjimek</h1>
 <table>
@@ -12,7 +19,7 @@
   {% for exception in list %}
   <tr class="{{ cycle(['', 'sc'], loop.index) }}">
     <td>
-      {{ exception.exceptionData['class'] }}: "{{ exception.exceptionData['message'] }}"<br/>
+      <a href="{{ path('exception', {'id': exception.id} ) }}">{{ exception.exceptionData['class'] }}</a>: "{{ exception.exceptionData['message'] }}"<br/>
       <span class="path">
         {{ exception.exceptionData['file'] }}#{{ exception.exceptionData['line'] }}
       </span>

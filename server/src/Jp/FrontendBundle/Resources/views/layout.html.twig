@@ -15,15 +15,12 @@
   </div>
   <div id="content" class="container_10">
     
-    <div id="project-menu" class="grid_3">
-      <h2>Projekty</h2>
-      <ul id="projMenu">
-        <li><a href="#">FastGSM</a></li>
-      </ul>
+    <div id="parent-content" class="grid_3">
+      {% block parent_content %}{% endblock %}
     </div>
     
     <div id="exList" class="grid_7 ">
-          {% block body %}{% endblock %}
+      {% block body %}{% endblock %}
     </div>
   </div>
 </body>
