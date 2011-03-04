@@ -66,7 +66,7 @@ class ExceptorClient_Curl
         );
 
         // prepare POST data
-        $gzippedData = gzcompress(serialize($structure););
+        $gzippedData = gzcompress(serialize($structure));
         $content = http_build_query(array('data' => $gzippedData));
 
         // open connection
