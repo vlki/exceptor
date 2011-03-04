@@ -8,25 +8,53 @@ namespace Vlki\ExceptorBundle\Entity;
 class Exception
 {
     /**
-     * @var integer $id
+     * @var int
      */
     private $id;
 
     /**
-     * @var \DateTime $received_at
+     * @var \DateTime
      */
     private $received_at;
 
     /**
-     * @var string $data
+     * Superglobal variable $_SERVER
+     *
+     * @var array
      */
-    private $data;
+    private $sg_server;
+
+    /**
+     * Superglobal variable $_SESSION
+     *
+     * @var array
+     */
+    private $sg_session;
+
+    /**
+     * Superglobal variable $_GET
+     *
+     * @var array
+     */
+    private $sg_get;
+
+    /**
+     * Superglobal variable $_POST
+     *
+     * @var array
+     */
+    private $sg_post;
+
+    /**
+     * Data of exception. Should contain hash with keys class, message, code, file, line and trace.
+     *
+     * @var array
+     */
+    private $exception_data;
 
 
     /**
-     * Get id
-     *
-     * @return integer $id
+     * @return int $id
      */
     public function getId()
     {
@@ -34,19 +62,15 @@ class Exception
     }
 
     /**
-     * Set received_at
-     *
      * @param \DateTime $receivedAt
      */
-    public function setReceivedAt($receivedAt)
+    public function setReceivedAt(\DateTime $receivedAt)
     {
         $this->received_at = $receivedAt;
     }
 
     /**
-     * Get received_at
-     *
-     * @return \DateTime $receivedAt
+     * @return \DateTime
      */
     public function getReceivedAt()
     {
@@ -54,22 +78,82 @@ class Exception
     }
 
     /**
-     * Set data
-     *
-     * @param string $data
+     * @param array $sgServer
      */
-    public function setData($data)
+    public function setSgServer($sgServer)
     {
-        $this->data = $data;
+        $this->sg_server = $sgServer;
     }
 
     /**
-     * Get data
-     *
-     * @return string $data
+     * @return array
      */
-    public function getData()
+    public function getSgServer()
     {
-        return $this->data;
+        return $this->sg_server;
+    }
+
+    /**
+     * @param array $sgSession
+     */
+    public function setSgSession($sgSession)
+    {
+        $this->sg_session = $sgSession;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSgSession()
+    {
+        return $this->sg_session;
+    }
+
+    /**
+     * @param array $sgGet
+     */
+    public function setSgGet($sgGet)
+    {
+        $this->sg_get = $sgGet;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSgGet()
+    {
+        return $this->sg_get;
+    }
+
+    /**
+     * @param array $sgPost
+     */
+    public function setSgPost($sgPost)
+    {
+        $this->sg_post = $sgPost;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSgPost()
+    {
+        return $this->sg_post;
+    }
+
+    /**
+     * @param array $exceptionData
+     */
+    public function setExceptionData($exceptionData)
+    {
+        $this->exception_data = $exceptionData;
+    }
+
+    /**
+     * @return array
+     */
+    public function getExceptionData()
+    {
+        return $this->exception_data;
     }
 }

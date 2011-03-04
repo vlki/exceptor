@@ -4,7 +4,7 @@ namespace Vlki\ExceptorBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Symfony\Component\HttpFoundation\Response,
-    Vlki\ExceptorBundle\Entity\Exception,
+    Vlki\ExceptorBundle\Entity\Exception as ExceptionEntity,
     DateTime;
 
 class InputController extends Controller
@@ -46,8 +46,12 @@ class InputController extends Controller
             }
         }
 
-        $exception = new Exception();
-        $exception->setData($data);
+        $exception = new ExceptionEntity();
+        $exception->setSgServer($structure['server']);
+        $exception->setSgGet($structure['get']);
+        $exception->setSgPost($structure['post']);
+        $exception->setSgSession($structure['session']);
+        $exception->setExceptionData($structure['exception']);
         $exception->setReceivedAt(new DateTime());
 
         /** @var $em \Doctrine\ORM\EntityManager */

@@ -9,5 +9,13 @@ Vlki\ExceptorBundle\Entity\Exception:
   fields:
     received_at:
       type: datetime
-    data:
-      type: text
+    sg_server:
+      type: array
+    sg_session:
+      type: array
+    sg_get:
+      type: array
+    sg_post:
+      type: array
+    exception_data:
+      type: array
