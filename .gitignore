@@ -1,2 +1,4 @@
 server/app/cache/
 server/app/logs/
+
+server/app/config/config_*.yml
