@@ -25,7 +25,11 @@
     </tr>
     <tr>
         <th>Trace</th>
-        <td>{{ data['trace'] }}</td>
+        <td>
+            {% for trace in data['trace'] %}
+            <pre>{{ trace }}</pre>
+            {% endfor %}
+        </td>
     </tr>
 </table>
 {% endblock %}
