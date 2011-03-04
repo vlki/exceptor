@@ -1,4 +1,6 @@
 server/app/cache/
 server/app/logs/
 
-server/app/config/config_*.yml
+server/app/config/config_dev.yml
+server/app/config/config_prod.yml
+server/app/config/config_test.yml
