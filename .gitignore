@@ -4,3 +4,5 @@ server/app/logs/
 server/app/config/config_dev.yml
 server/app/config/config_prod.yml
 server/app/config/config_test.yml
+
+server/app/phpunit.xml
