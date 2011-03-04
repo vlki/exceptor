@@ -3,11 +3,22 @@
 {% block title %} Výjimky {% endblock %}
 
 {% block body %}
+<h1>Seznam všech výjimek</h1>
 <table>
+  <tr>
+    <th>Message &amp; Location</th>
+    <th>Date</th>
+  </tr>
   {% for exception in list %}
   <tr class="{{ cycle(['', 'sc'], loop.index) }}">
+    <td>
+      {{ exception.exceptionData['class'] }}: "{{ exception.exceptionData['message'] }}"<br/>
+      <span class="path">
+        {{ exception.exceptionData['file'] }}#{{ exception.exceptionData['line'] }}
+      </span>
+    </td>
+
     <td>{{ exception.receivedAt|date("j. n. Y, H:i:s") }}</td>
-    <td>{{ exception.exceptionData['class'] }}, {{ exception.exceptionData['message'] }}</td>
   </tr>
   {% endfor %}
 </table>

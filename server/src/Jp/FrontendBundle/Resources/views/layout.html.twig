@@ -3,11 +3,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="cs" lang="cs">
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="http://960ls.atomidata.com/static/cssserve/2011/3/4/0914cac567ea4bf393ea7fc2fc9dd542.css">
+  
   <title>{% block title %}Default title{% endblock %}</title>
 </head>
 <body>
-  <div id="content">
-  {% block body %}{% endblock %}
+  <div id="header" class="container_10">
+    <ul id="headerMenu">
+      <li>Menu</li>
+    </ul>
+  </div>
+  <div id="content" class="container_10">
+    
+    <div id="project-menu" class="grid_3">
+      <h2>Projekty</h2>
+      <ul id="projMenu">
+        <li><a href="#">FastGSM</a></li>
+      </ul>
+    </div>
+    
+    <div id="exList" class="grid_7 ">
+          {% block body %}{% endblock %}
+    </div>
   </div>
 </body>
 </html>
