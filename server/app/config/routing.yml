@@ -1,2 +1,5 @@
 exceptor:
     resource: @ExceptorBundle/Resources/config/routing.yml
+
+frontend:
+    resource: @FrontendBundle/Resources/config/routing.yml

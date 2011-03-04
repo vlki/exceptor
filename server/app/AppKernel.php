@@ -20,6 +20,7 @@ class AppKernel extends Kernel
 
             // register your bundles
             new Vlki\ExceptorBundle\ExceptorBundle(),
+            new Jp\FrontendBundle\FrontendBundle(),
         );
 
         if ($this->isDebug()) {

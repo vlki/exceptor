@@ -1,0 +1,14 @@
+{% extends 'FrontendBundle::layout.html.twig' %}
+
+{% block title %} Výjimky {% endblock %}
+
+{% block body %}
+<table>
+  {% for exception in list %}
+  <tr class="{{ cycle(['', 'sc'], loop.index) }}">
+    <td>{{ exception.receivedAt|date("j. n. Y, H:i:s") }}</td>
+    <td>{{ exception.exceptionData['class'] }}, {{ exception.exceptionData['message'] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}
