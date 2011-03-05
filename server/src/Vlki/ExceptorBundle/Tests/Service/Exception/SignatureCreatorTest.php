@@ -147,9 +147,59 @@ class SignatureCreatorTest extends Test
         $this->assertNotEquals($signature1, $signature2);        
     }
 
+    public function testCreateSignature_oneTraceRecordWithDifferentBaseFilePathWithoutMask_differentSignature()
+    {
+        $e1 = $this->createSingleTraceExceptionEntity();
+        $e2 = $this->createSingleTraceWithDifferentBaseFilePathExceptionEntity();
+        $uut = $this->createUut();
+
+        $signature1 = $uut->createSignature($e1);
+        $signature2 = $uut->createSignature($e2);
+
+        $this->assertNotEquals($signature1, $signature2);             
+    }
+
+    public function testCreateSignature_oneTraceRecordWithDifferentBaseFilePathWithShortMask_differentSignature()
+    {
+        $e1 = $this->createSingleTraceExceptionEntity();
+        $e2 = $this->createSingleTraceWithDifferentBaseFilePathExceptionEntity();
+        $uut = $this->createUutWithMask('~^/home/vlki/[a-z]+~');
+
+        $signature1 = $uut->createSignature($e1);
+        $signature2 = $uut->createSignature($e2);
+
+        $this->assertNotEquals($signature1, $signature2);
+    }
+
+    public function testCreateSignature_oneTraceRecordWithDifferentBaseFilePathWithMask_sameSignature()
+    {
+        $e1 = $this->createSingleTraceExceptionEntity();
+        $e2 = $this->createSingleTraceWithDifferentBaseFilePathExceptionEntity();
+        $uut = $this->createUutWithMask('~^/home/vlki/projects/exceptor(_release2)?~');
+
+        $signature1 = $uut->createSignature($e1);
+        $signature2 = $uut->createSignature($e2);
+
+        $this->assertEquals($signature1, $signature2);
+    }
+
+    public function testCreateSignature_badMaskRegularExpression_errorThrown()
+    {
+        $e = $this->createSingleTraceExceptionEntity();
+        $uut = $this->createUutWithMask('~^/home/vlki/projects/exceptor(_relea');
+
+        $this->setExpectedException('PHPUnit_Framework_Error');
+        $uut->createSignature($e);
+    }
+
     protected function createUut()
     {
         return new Uut();
+    }
+
+    protected function createUutWithMask($mask)
+    {
+        return new Uut($mask);
     }
 
     protected function createNoTraceExceptionEntity()
@@ -183,6 +233,28 @@ class SignatureCreatorTest extends Test
                 )
             ),
             'file' => '/home/vlki/projects/exceptor/client/curl/example.php',
+            'line' => 6
+        ));
+
+        return $e;
+    }
+
+    protected function createSingleTraceWithDifferentBaseFilePathExceptionEntity()
+    {
+        $e = new ExceptionEntity();
+        $e->setExceptionData(array(
+            'class' => 'Exception',
+            'message' => 'testing exception',
+            'code' => 546,
+            'trace' => array(
+                0 => array(
+                    'file' => '/home/vlki/projects/exceptor_release2/client/curl/example.php',
+                    'line' => 10,
+                    'functions' => 'asdasd',
+                    'args' => array(),
+                )
+            ),
+            'file' => '/home/vlki/projects/exceptor_release2/client/curl/example.php',
             'line' => 6
         ));
 
