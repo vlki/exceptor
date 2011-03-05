@@ -52,6 +52,13 @@ class Exception
      */
     private $exception_data;
 
+    /**
+     * Signature of the exception. Exception with same signatures should be grouped.
+     *
+     * @var string
+     */
+    private $signature;
+
 
     /**
      * @return int $id
@@ -156,4 +163,21 @@ class Exception
     {
         return $this->exception_data;
     }
+
+    /**
+     * @param string $signature
+     */
+    public function setSignature($signature)
+    {
+        $this->signature = $signature;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
 }

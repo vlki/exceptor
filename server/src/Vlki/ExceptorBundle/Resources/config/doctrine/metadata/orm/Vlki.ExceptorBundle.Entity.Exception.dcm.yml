@@ -19,3 +19,6 @@ Vlki\ExceptorBundle\Entity\Exception:
       type: array
     exception_data:
       type: array
+    signature:
+      type: string
+      length: 32

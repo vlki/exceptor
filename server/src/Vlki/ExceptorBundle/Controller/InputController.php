@@ -5,6 +5,7 @@ namespace Vlki\ExceptorBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Symfony\Component\HttpFoundation\Response,
     Vlki\ExceptorBundle\Entity\Exception as ExceptionEntity,
+    Vlki\ExceptorBundle\Service\Exception\SignatureCreator,
     DateTime;
 
 class InputController extends Controller
@@ -53,6 +54,9 @@ class InputController extends Controller
         $exception->setSgSession($structure['session']);
         $exception->setExceptionData($structure['exception']);
         $exception->setReceivedAt(new DateTime());
+
+        $signatureCreator = new SignatureCreator('~^/home/fastgsm/production/releases/[0-9]{14}~');
+        $exception->setSignature($signatureCreator->createSignature($exception));
 
         /** @var $em \Doctrine\ORM\EntityManager */
         $em = $this->get('doctrine.orm.entity_manager');
