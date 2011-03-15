@@ -1,5 +1,6 @@
 {% extends 'FrontendBundle::layout.html.twig' %}
 
+{% set exception = exceptions[0] %}
 {% set data = exception.exceptionData %}
 
 {% block title %}Výjímka {{ data['class'] }}{% endblock %}
@@ -11,7 +12,6 @@
 {% endblock %}
 
 {% block body %}
-
 <h1>{{ data['class'] }} ({{ data['code'] }})</h1>
 <h2>Naposledy zalogována {{ exception.receivedAt|date("j. n. Y, H:i:s") }}</h2>
 <table id="excDetails">
@@ -31,5 +31,12 @@
             {% endfor %}
         </td>
     </tr>
+</table>
+
+<h2>Všechny výskyty výjimky</h2>
+<table id="excInstances">
+    {% for e in exceptions %}
+    <tr><td>{{ e.receivedAt|date("j. n. Y, H:i:s")}}</td></tr>
+    {% endfor %}
 </table>
 {% endblock %}

@@ -3,5 +3,5 @@ list_exceptions:
     defaults: { _controller: FrontendBundle:Exception:index }
     
 exception:
-    pattern: /exception/{id}
+    pattern: /exception/{signature}
     defaults: { _controller: FrontendBundle:Exception:detail }

@@ -15,17 +15,20 @@
   <tr>
     <th>Message &amp; Location</th>
     <th>Date</th>
+    <th>Count</th>
   </tr>
-  {% for exception in list %}
+  {% for exceptionArr in list %}
+  {% set exception = exceptionArr[0] %}
   <tr class="{{ cycle(['', 'sc'], loop.index) }}">
     <td>
-      <a href="{{ path('exception', {'id': exception.id} ) }}">{{ exception.exceptionData['class'] }}</a>: "{{ exception.exceptionData['message'] }}"<br/>
+      <a href="{{ path('exception', {'signature': exception.signature} ) }}">{{ exception.exceptionData['class'] }}</a>: "{{ exception.exceptionData['message'] }}"<br/>
       <span class="path">
         {{ exception.exceptionData['file'] }}#{{ exception.exceptionData['line'] }}
       </span>
     </td>
 
     <td>{{ exception.receivedAt|date("j. n. Y, H:i:s") }}</td>
+    <td>{{ exceptionArr['times'] }} &times;</td>
   </tr>
   {% endfor %}
 </table>
