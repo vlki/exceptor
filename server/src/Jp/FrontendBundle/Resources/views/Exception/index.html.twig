@@ -14,16 +14,16 @@
 <table>
   <tr>
     <th>Message &amp; Location</th>
-    <th>Date</th>
-    <th>Count</th>
+    <th>Datum</th>
+    <th>Celkem zaznamenáno</th>
   </tr>
   {% for exceptionArr in list %}
   {% set exception = exceptionArr[0] %}
   <tr class="{{ cycle(['', 'sc'], loop.index) }}">
     <td>
-      <a href="{{ path('exception', {'signature': exception.signature} ) }}">{{ exception.exceptionData['class'] }}</a>: "{{ exception.exceptionData['message'] }}"<br/>
+      <strong><a href="{{ path('exception', {'signature': exception.signature} ) }}">{{ exception.exceptionData['class'] }}</a></strong>: "{{ exception.exceptionData['message'] }}"<br/>
       <span class="path">
-        {{ exception.exceptionData['file'] }}#{{ exception.exceptionData['line'] }}
+        v souboru <em>{{ exception.exceptionData['file'] }} řádek {{ exception.exceptionData['line'] }}</em>
       </span>
     </td>
 

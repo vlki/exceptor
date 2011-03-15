@@ -6,33 +6,70 @@
 {% block title %}Výjímka {{ data['class'] }}{% endblock %}
 
 {% block parent_content %}
-<h2>Projekt XY</h2>
+<h2>Projekt FastGSM</h2>
 
 <p>Detaily projektu</p>
 {% endblock %}
 
 {% block body %}
-<h1>{{ data['class'] }} ({{ data['code'] }})</h1>
+<h1>{{ data['class']|abbr_class }} ({{ data['code'] }})</h1>
 <h2>Naposledy zalogována {{ exception.receivedAt|date("j. n. Y, H:i:s") }}</h2>
-<table id="excDetails">
-    <tr>
-        <th>Message</th>
-        <td>{{ data['message'] }}</td>
-    </tr>
-    <tr>
-        <th>Location</th>
-        <td>{{ data['file'] }} at line {{ data['line'] }}</td>
-    </tr>
-    <tr>
-        <th>Trace</th>
-        <td>
-            {% for trace in data['trace'] %}
-            <pre>{{ trace }}</pre>
-            {% endfor %}
-        </td>
-    </tr>
-</table>
 
+<div id="excDetails">
+    <div>
+        <h3>Message</h3>
+        {{ data['message']|replace({"\n": '<br />'})|format_file_from_text }}
+        <code>{{ data['file']|format_file_from_text }}</code> at line <code>{{ data['line'] }}</code>
+    </div>
+
+    <div>
+        <h3>Trace</h3>
+        <div id="excTrace">
+            {% for trace in data['trace'] %}
+
+            <p{{ loop.first ? ' class="f"' : "" }}>{{loop.index}}.{% if trace['class'] is defined and trace['type'] is defined %}<strong>{{ trace['class']|abbr_class}}</strong>{{ trace['type']}}{% endif %}<strong>{{ trace['function']}}</strong>({{ trace['args'] }})</p>
+            {% if trace.file is defined and trace.line is defined %}
+                in <em>{{ trace.file|format_file(trace.line) }}</em>
+            {% endif %}
+            
+            {% endfor %}
+        </div>
+    </div>
+    <div class="collapsible">
+        <h3><a href="">$_GET</a></h3>
+        <div>
+        <pre>{{ exception.sgGet|var_export }}</pre>
+        </div>
+    </div>
+    <div class="collapsible">
+        <h3><a href="">$_POST</a></h3>
+        <div>
+        <pre>{{ exception.sgPost|var_export }}</pre>
+        </div>
+    </div>
+    <div class="collapsible">
+        <h3><a href="">$_SESSION</a></h3>
+        <div>
+        <pre>{{ exception.sgSession|var_export }}</pre>
+        </div>
+    </div>
+    <div class="collapsible">
+        <h3><a href="">$_SERVER</a></h3>
+        <div>
+        <pre>{{ exception.sgServer|var_export }}</pre>
+        </div>
+    </div>
+</div>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+           $("div.collapsible").children("div").slideToggle("fast");
+           
+           $("div.collapsible h3 a").click(function(e) {
+               $(this).parents("h3").siblings("div").slideToggle("fast");
+               e.preventDefault();
+           })
+        });
+    </script>
 <h2>Všechny výskyty výjimky</h2>
 <table id="excInstances">
     {% for e in exceptions %}
