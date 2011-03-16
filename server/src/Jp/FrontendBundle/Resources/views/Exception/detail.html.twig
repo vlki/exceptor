@@ -15,13 +15,17 @@
 
 {% block body %}
 <h1>{{ data['class']|abbr_class }} ({{ data['code'] }})</h1>
-<h2>Naposledy zalogována {{ exception.receivedAt|date("j. n. Y, H:i:s") }}</h2>
+
+<p>
+in <em>{{ data['file']|format_file_from_text }}</em> at line <em>{{ data['line'] }}</em>
+</p>
+
+<p id="laslLoggedAt">Naposledy zalogována {{ exception.receivedAt|date("j. n. Y, H:i:s") }}</p>
 
 <div id="excDetails">
     <div>
         <h3>Message</h3>
         {{ data['message']|replace({"\n": '<br />'})|format_file_from_text }}
-        <code>{{ data['file']|format_file_from_text }}</code> at line <code>{{ data['line'] }}</code>
     </div>
 
     <div>
