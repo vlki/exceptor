@@ -1,0 +1,17 @@
+security.config:
+    encoders:
+        Symfony\Component\Security\Core\User\User: sha1
+
+    providers:
+        main:
+            users:
+                adam: { password: 6e017b5464f820a6c1bb5e9f6d711a667a80d8ea, roles: ROLE_USER }
+                vlki: { password: 6e017b5464f820a6c1bb5e9f6d711a667a80d8ea, roles: ROLE_USER }
+
+    firewalls:
+        main:
+            pattern:    /exception.*
+            http_basic: true
+
+    access_control:
+        - { path: /exception.*, role: ROLE_USER }

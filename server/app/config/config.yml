@@ -1,3 +1,6 @@
+imports:
+    - { resource: security.yml }
+    
 app.config:
     charset:       UTF-8
     error_handler: null
@@ -27,9 +30,9 @@ doctrine.orm:
     auto_generate_proxy_classes: %kernel.debug%
     mappings:
         ExceptorBundle: ~
-        
-frontend.twig: ~
 
+frontend.twig: ~
+    
 ## Swiftmailer Configuration
 #swiftmailer.config:
 #    transport:  smtp
