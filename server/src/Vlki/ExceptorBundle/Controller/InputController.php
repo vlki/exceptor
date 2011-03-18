@@ -15,7 +15,7 @@ class InputController extends Controller
         /** @var $request \Symfony\Component\HttpFoundation\Request */
         $request = $this->get('request');
 
-        $gzippedData = $request->request->get('data');
+        $gzippedData = urldecode($request->request->get('data'));
 
         $data = gzuncompress($gzippedData);
         if (!$data) {
