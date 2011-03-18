@@ -1,0 +1,92 @@
+require 'rubygems'
+require 'railsless-deploy'
+
+load 'deploy' if respond_to?(:namespace) # cap2 differentiator
+
+load 'app/config/deploy'
+
+
+#
+# For deployment of subdirectory
+# link:
+#   http://stackoverflow.com/questions/29168/deploying-a-git-subdirectory-in-capistrano
+#
+
+require 'capistrano/recipes/deploy/strategy/remote_cache'
+
+class RemoteCacheSubdir < Capistrano::Deploy::Strategy::RemoteCache
+
+  private
+
+  def repository_cache_subdir
+    if configuration[:deploy_subdir] then
+      File.join(repository_cache, configuration[:deploy_subdir])
+    else
+      repository_cache
+    end
+  end
+
+  def copy_repository_cache
+    logger.trace "copying the cached version to #{configuration[:release_path]}"
+    if copy_exclude.empty?
+      run "cp -RPp #{repository_cache_subdir} #{configuration[:release_path]} && #{mark}"
+    else
+      exclusions = copy_exclude.map { |e| "--exclude=\"#{e}\"" }.join(' ')
+      run "rsync -lrpt #{exclusions} #{repository_cache_subdir}/* #{configuration[:release_path]} && #{mark}"
+    end
+  end
+
+end
+
+
+set :strategy, RemoteCacheSubdir.new(self)
+
+
+
+#
+# Tasks
+#
+
+after :deploy, 'deploy:cleanup'
+
+namespace :deploy do
+  desc "Symlink static directories and static files that need to remain between deployments."
+  task :share_childs do
+    if shared_children
+      shared_children.each do |link|
+        run "mkdir -p #{shared_path}/#{link}"
+        run "if [ -d #{release_path}/#{link} ] ; then rm -rf #{release_path}/#{link}; fi"
+        run "ln -nfs #{shared_path}/#{link} #{release_path}/#{link}"
+      end
+    end
+    if shared_files
+      shared_files.each do |link|
+        link_dir = File.dirname("#{shared_path}/#{link}")
+        run "mkdir -p #{link_dir}"
+        run "touch #{shared_path}/#{link}"
+        run "ln -nfs #{shared_path}/#{link} #{release_path}/#{link}"
+      end
+    end
+  end
+
+  desc "Customize the finalize_update task to work with symfony."
+  task :finalize_update, :except => { :no_release => true } do
+    run "chown -R www-data:www-data #{latest_release}"
+
+    # Share common files & folders
+    share_childs
+
+    if fetch(:normalize_asset_timestamps, true)
+      stamp = Time.now.utc.strftime("%Y%m%d%H%M.%S")
+      asset_paths = asset_children.map { |p| "#{latest_release}/#{p}" }.join(" ")
+      run "find #{asset_paths} -exec touch -t #{stamp} {} ';'; true", :env => { "TZ" => "UTC" }
+    end
+
+    #
+  end
+
+  # remove these tasks
+  task :restart do
+    # we dont need to restart application
+  end
+end
